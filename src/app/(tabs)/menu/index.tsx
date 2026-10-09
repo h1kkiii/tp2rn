@@ -1,4 +1,4 @@
-import { Link } from 'expo-router';
+import { Link, Stack, useNavigation } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { colores, estilosComunes } from '@/components/estilos';
@@ -9,8 +9,14 @@ import { CATEGORIAS } from '@/data/tipos';
 
 // /menu: platos agrupados por categoría.
 export default function Menu() {
+  // Desafío 1: cantidad de pantallas en la pila del Stack de Menú.
+  // useNavigation() da el navegador que contiene a esta pantalla (el Stack
+  // de la tab Menú) y getState().routes es su pila, de la base al tope.
+  const cantidadEnPila = useNavigation().getState()?.routes.length ?? 1;
+
   return (
     <Pantalla>
+      <Stack.Screen options={{ title: `Menú (${cantidadEnPila})` }} />
       {CATEGORIAS.map((categoria) => (
         <View key={categoria} style={estilos.grupo}>
           <View style={estilos.encabezado}>

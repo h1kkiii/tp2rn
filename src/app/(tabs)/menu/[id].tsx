@@ -1,4 +1,4 @@
-import { Link, Stack, useLocalSearchParams } from 'expo-router';
+import { Link, Stack, useLocalSearchParams, useNavigation } from 'expo-router';
 import { StyleSheet, Text } from 'react-native';
 
 import { Boton } from '@/components/Boton';
@@ -12,6 +12,9 @@ export default function DetallePlato() {
   // Los parámetros de la URL llegan SIEMPRE como texto: "1", "999", "abc".
   const { id } = useLocalSearchParams<{ id: string }>();
   const { agregarAlCarrito, cantidadItems } = useComedor();
+  // Desafío 1: cantidad de pantallas en la pila del Stack de Menú
+  // (ej.: [/menu, /menu/1] -> 2). Se muestra en el título del header.
+  const cantidadEnPila = useNavigation().getState()?.routes.length ?? 1;
 
   // Convertimos a número y validamos que sea entero antes de buscar.
   // Number('abc') es NaN y Number.isInteger(NaN) es false: no hay crash.
@@ -21,7 +24,7 @@ export default function DetallePlato() {
   if (!plato) {
     return (
       <Pantalla>
-        <Stack.Screen options={{ title: 'Plato no encontrado' }} />
+        <Stack.Screen options={{ title: `Plato no encontrado (${cantidadEnPila})` }} />
         <Text style={estilosComunes.error}>No existe el plato &quot;{id}&quot;.</Text>
         <Link href="/menu" style={estilosComunes.enlace}>
           Volver al menú
@@ -33,7 +36,7 @@ export default function DetallePlato() {
   return (
     <Pantalla>
       {/* El título del header se setea desde la propia pantalla. */}
-      <Stack.Screen options={{ title: plato.nombre }} />
+      <Stack.Screen options={{ title: `${plato.nombre} (${cantidadEnPila})` }} />
 
       <Text style={estilosComunes.titulo}>{plato.nombre}</Text>
       <Text style={estilos.precio}>{formatearPrecio(plato.precio)}</Text>

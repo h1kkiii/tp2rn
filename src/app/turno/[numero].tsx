@@ -5,6 +5,9 @@ import { colores, estilosComunes } from '@/components/estilos';
 import { Pantalla } from '@/components/Pantalla';
 import { useComedor } from '@/context/ComedorContext';
 
+// Minutos estimados para preparar cada pedido (desafío 4).
+const MINUTOS_POR_PEDIDO = 3;
+
 // /turno/[numero]: número de turno y cuántos pedidos hay adelante.
 export default function Turno() {
   const { numero } = useLocalSearchParams<{ numero: string }>();
@@ -30,6 +33,9 @@ export default function Turno() {
       </>
     );
   } else {
+    // Desafío 4: tiempo estimado = posición en la cola × 3 minutos
+    // (la posición es la cantidad de pedidos que hay adelante).
+    const esperaMinutos = posicion * MINUTOS_POR_PEDIDO;
     contenido = (
       <>
         <Text style={estilos.numero}>#{n}</Text>
@@ -38,6 +44,7 @@ export default function Turno() {
             ? '¡Sos el próximo! No hay pedidos adelante.'
             : `Hay ${posicion} ${posicion === 1 ? 'pedido' : 'pedidos'} adelante en la cola.`}
         </Text>
+        <Text style={estilosComunes.texto}>Tiempo estimado de espera: {esperaMinutos} minutos.</Text>
       </>
     );
   }
