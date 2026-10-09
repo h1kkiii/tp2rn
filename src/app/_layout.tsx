@@ -28,8 +28,9 @@ function NavegacionRaiz() {
 
   return (
     <Stack>
-      {/* Las pestañas tienen su propia barra y headers: ocultamos el del Stack raíz. */}
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      {/* Las pestañas tienen su propia barra y headers: ocultamos el del Stack raíz.
+          El title se usa como texto del botón "atrás" de las pantallas de arriba. */}
+      <Stack.Screen name="(tabs)" options={{ headerShown: false, title: 'Inicio' }} />
 
       <Stack.Screen name="categorias/[categoria]" options={{ title: 'Categoría' }} />
       <Stack.Screen name="buscar" options={{ title: 'Buscar' }} />

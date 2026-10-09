@@ -34,6 +34,25 @@ export function platosDeCategoria(categoria: Categoria): Plato[] {
   return platos.filter((p) => p.categoria === categoria);
 }
 
+// Pasa a minúsculas y saca las tildes: "Chipá" -> "chipa".
+// NFD separa la letra de su tilde y el regex borra las tildes sueltas.
+export function normalizarTexto(texto: string): string {
+  return texto.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+}
+
+// Filtro del buscador: por texto (nombre o descripción) y por categoría.
+export function filtrarPlatos(texto: string, categoria?: Categoria): Plato[] {
+  const buscado = normalizarTexto(texto);
+  return platos.filter((p) => {
+    const coincideCategoria = categoria === undefined || p.categoria === categoria;
+    const coincideTexto =
+      buscado === '' ||
+      normalizarTexto(p.nombre).includes(buscado) ||
+      normalizarTexto(p.descripcion).includes(buscado);
+    return coincideCategoria && coincideTexto;
+  });
+}
+
 // Para mostrar precios en pesos: 3200 -> "$3.200".
 export function formatearPrecio(precio: number): string {
   return `$${precio.toLocaleString('es-AR')}`;
