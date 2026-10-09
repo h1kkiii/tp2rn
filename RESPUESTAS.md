@@ -6,7 +6,7 @@
 |---|---|
 | **Alumno** | Natanael Duarte |
 | **Fecha de entrega** | 02-10-26 |
-| **Repositorio** |  |
+| **Repositorio** | https://github.com/h1kkiii/tp2rn |
 
 > Este archivo contiene las respuestas de las Partes A a F. La Parte G (sistema "Comedor IPF") está documentada en `README.md`.
 
