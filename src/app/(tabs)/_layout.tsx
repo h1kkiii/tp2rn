@@ -26,6 +26,10 @@ export default function LayoutTabs() {
           // La tab tiene su propio Stack con header: ocultamos el de la tab
           // para no ver dos headers.
           headerShown: false,
+          // Al salir de la tab, su Stack vuelve al índice (/menu). Así, al
+          // tocar "Menú" otra vez se ve el menú general y no el último
+          // plato abierto.
+          popToTopOnBlur: true,
           tabBarIcon: ({ color, size }) => <Ionicons name="restaurant" color={color} size={size} />,
         }}
       />
